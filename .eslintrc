@@ -1,6 +1,16 @@
 {
-  "extends": ["next/core-web-vitals", "airbnb"],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "extends": ["next/core-web-vitals", "airbnb", "prettier"],
   "rules": {
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }
