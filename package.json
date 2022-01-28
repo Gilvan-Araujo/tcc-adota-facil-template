@@ -7,8 +7,8 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
-    "pre-commit": "lint-staged",
-    "test": "./node_modules/.bin/cypress open"
+    "pre-commit": "lint-staged && yarn test",
+    "test": "./node_modules/.bin/cypress run"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
