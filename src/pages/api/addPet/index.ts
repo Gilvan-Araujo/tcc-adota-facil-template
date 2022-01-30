@@ -12,10 +12,7 @@ module.exports = async (req: any, res: any) => {
   try {
     const dbs = await client.query(
       q.Create(q.Collection('Pets'), {
-        data: {
-          name: formData.name,
-          type: formData.type
-        }
+        data: formData
       })
     )
 
