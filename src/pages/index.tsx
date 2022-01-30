@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core'
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
@@ -25,6 +26,22 @@ function Home() {
     }
   }
 
+  const addPet = () => {
+    setLoading(true)
+
+    const newPet = {
+      name: `Pet ${Math.round(Math.random() * 100)}`,
+      type: 'dog'
+    }
+
+    try {
+      Pets.addPet(newPet).then(async () => {
+        getData()
+      })
+    } catch (error) {
+      setLoading(false)
+    }
+  }
   useEffect(() => {
     getData()
   }, [])
@@ -46,6 +63,8 @@ function Home() {
           {item.name} - {item.type}
         </div>
       ))}
+
+      <Button onClick={addPet}>Adicionar pet aleatório</Button>
     </div>
   )
 }

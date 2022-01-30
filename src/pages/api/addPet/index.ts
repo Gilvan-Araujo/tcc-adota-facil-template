@@ -7,9 +7,16 @@ const q = faunadb.query
 const client = new faunadb.Client({ secret })
 
 module.exports = async (req: any, res: any) => {
+  const formData = req.body
+
   try {
     const dbs = await client.query(
-      q.Map(q.Paginate(q.Match(q.Index('all_pets'))), (ref: any) => q.Get(ref))
+      q.Create(q.Collection('Pets'), {
+        data: {
+          name: formData.name,
+          type: formData.type
+        }
+      })
     )
 
     res.status(200).json(dbs.data)
