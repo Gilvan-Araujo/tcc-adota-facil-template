@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Load from '../components/Load'
 import Images from '../services/Images'
 import Pets from '../services/Pets'
-import styles from '../styles/Home.module.css'
+import HomeContainer from '../styles/Home'
 
 function Home() {
   const [data, setData] = useState<any[]>([])
@@ -66,7 +66,7 @@ function Home() {
   }, [])
 
   return (
-    <div className={styles.container}>
+    <HomeContainer>
       <Load loading={loading} />
       <Head>
         <title>Adota Fácil</title>
@@ -90,7 +90,7 @@ function Home() {
 
       <input type="file" name="" id="" onChange={handleUpload} />
       <Button onClick={addPet}>Adicionar pet aleatório</Button>
-    </div>
+    </HomeContainer>
   )
 }
 
