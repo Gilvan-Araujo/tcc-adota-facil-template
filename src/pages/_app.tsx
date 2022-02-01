@@ -1,8 +1,12 @@
-import { CssBaseline, ThemeProvider } from '@material-ui/core'
+import {
+  CssBaseline,
+  ThemeProvider as MuiThemeProvider
+} from '@material-ui/core'
 import type { AppProps } from 'next/app'
 import React from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { ThemeProvider as StyledProvider } from 'styled-components'
 
 import GlobalStyle from '../styles/global'
 import theme from '../styles/theme'
@@ -19,10 +23,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <MuiThemeProvider theme={theme}>
+        <StyledProvider theme={theme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </StyledProvider>
+      </MuiThemeProvider>
       <ToastContainer position="bottom-center" theme="dark" />
     </>
   )
