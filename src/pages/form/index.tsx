@@ -15,14 +15,22 @@ const Form = () => {
   const [image, setImage] = useState<File>()
 
   const schema = Yup.object().shape({
-    name: Yup.string().required('Campo obrigatório'),
+    name: Yup.string()
+      .required('Campo obrigatório')
+      .typeError('Não é um texto'),
     age: Yup.number()
       .typeError('Deve ser um número')
       .moreThan(0, 'Deve ser maior que 0')
       .required('Campo obrigatório'),
-    breed: Yup.string().required('Campo obrigatório'),
-    sex: Yup.string().required('Campo obrigatório'),
-    description: Yup.string()
+    breed: Yup.string()
+      .required('Campo obrigatório')
+      .typeError('Não é um texto'),
+    sex: Yup.string().required('Campo obrigatório').typeError('Não é um texto'),
+    email: Yup.string()
+      .email('E-mail inválido')
+      .required('Campo obrigatório')
+      .typeError('Não é um texto'),
+    description: Yup.string().typeError('Não é um texto')
   })
 
   const {
@@ -53,6 +61,7 @@ const Form = () => {
       .then(() => {
         setLoading(false)
         reset()
+        setImage(undefined)
         return toast.success('Pet cadastrado com sucesso')
       })
       .catch(() => {
@@ -63,7 +72,7 @@ const Form = () => {
     return {}
   }
 
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDropAccepted = useCallback((acceptedFiles) => {
     setImage(acceptedFiles[0])
   }, [])
 
@@ -79,7 +88,7 @@ const Form = () => {
     isDragAccept,
     isDragReject
   } = useDropzone({
-    onDrop,
+    onDropAccepted,
     onDropRejected,
     accept: 'image/jpg, image/jpeg, image/png'
   })
@@ -87,10 +96,9 @@ const Form = () => {
   return (
     <>
       <Load loading={loading} />
+
       <S.FormWrapper onSubmit={handleSubmit(onSubmitHandler)}>
-        <S.FormRow>
-          <h1>Form</h1>
-        </S.FormRow>
+        <S.FormTitle>Cadastro de Pet</S.FormTitle>
         <S.FormRow>
           <S.Input
             {...register('name')}
@@ -130,23 +138,47 @@ const Form = () => {
             helperText={errors.sex && errors.sex.message}
           />
         </S.FormRow>
+        <S.FormRow>
+          <S.LargeInput
+            {...register('email')}
+            label="E-mail"
+            placeholder="Digite o e-mail para contato"
+            variant="outlined"
+            error={!!errors.email}
+            helperText={errors.email && errors.email.message}
+          />
+        </S.FormRow>
+        <S.FormRow>
+          <S.LargeInput
+            {...register('description')}
+            label="Descrição"
+            placeholder="Digite a descrição"
+            variant="outlined"
+            multiline
+            rows={4}
+            error={!!errors.description}
+            helperText={errors.description && errors.description.message}
+          />
+        </S.FormRow>
         <S.FormColumn>
           <S.ImageDropzoneLabel>Imagem do pet</S.ImageDropzoneLabel>
           <S.ImageDropzone
             {...getRootProps()}
             dragAccept={isDragAccept}
             dragReject={isDragReject}
+            image={image}
           >
             <input {...getInputProps()} />
-            {isDragAccept && <p>Todos os arquivos serão aceitos</p>}
-            {isDragReject && <p>Alguns arquivos serão rejeitados</p>}
-            {!isDragActive && (
-              <p>Solte alguns arquivos ou clique para selecionar</p>
-            )}
+            {isDragAccept && <p>Foto aceita</p>}
+            {isDragReject && <p>Foto inválida</p>}
+            {!isDragActive && <p>Arraste a foto ou clique para selecionar</p>}
+            {image && <p>Imagem adicionada</p>}
           </S.ImageDropzone>
         </S.FormColumn>
         <S.FormRow>
-          <S.Button type="submit">Submit</S.Button>
+          <S.Button color="primary" variant="contained" type="submit">
+            Adicionar
+          </S.Button>
         </S.FormRow>
       </S.FormWrapper>
     </>

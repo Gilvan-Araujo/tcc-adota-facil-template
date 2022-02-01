@@ -4,9 +4,12 @@ import {
 } from '@material-ui/core'
 import styled from 'styled-components'
 
+import theme from '../theme'
+
 export type ImageDropzoneProps = {
   dragAccept: boolean
   dragReject: boolean
+  image: boolean
 }
 
 export const FormWrapper = styled.form`
@@ -14,37 +17,51 @@ export const FormWrapper = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   gap: 20px;
-  padding: 2rem;
+  padding: 40px;
+`
+
+export const FormTitle = styled.h1`
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
 `
 
 export const FormRow = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
+
+  @media (max-width: ${theme.breakpoints.values.sm}px) {
+    flex-direction: column;
+  }
 `
 
 export const FormColumn = styled.div`
   display: flex;
   flex-direction: column;
-  /* gap: 20px; */
 `
 
 export const ImageDropzoneLabel = styled.label`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: rgba(0, 0, 0, 0.54);
 
-  padding-left: 14px;
+  margin-left: 14px;
+  margin-bottom: 5px;
 `
 
-export const Input = styled(MUITextField)`
-  width: 240px;
-  display: flex;
-  flex-direction: column;
+export const Input = styled(MUITextField)``
+
+export const LargeInput = styled(MUITextField)`
+  width: 480px;
+
+  @media (max-width: ${theme.breakpoints.values.sm}px) {
+    width: 230px;
+  }
 `
 
 export const Button = styled(MUIButton)`
@@ -53,23 +70,32 @@ export const Button = styled(MUIButton)`
 
 export const ImageDropzone = styled.div<ImageDropzoneProps>`
   p {
-    color: ${({ dragAccept, dragReject }) => {
-      if (dragAccept) return '#388e3c'
-      if (dragReject) return '#ff1744'
-      return 'rgba(0, 0, 0, 0.54)'
+    color: ${({ dragAccept, dragReject, image }) => {
+      if (dragReject) return theme.palette.error.main
+      if (dragAccept || image) return theme.palette.success.main
+      return null
     }};
   }
 
   border: 2px dashed
-    ${({ dragAccept, dragReject }) => {
-      if (dragAccept) return '#81c784'
-      if (dragReject) return '#ff1744'
-      return 'rgba(0, 0, 0, 0.23)'
+    ${({ dragAccept, dragReject, image }) => {
+      if (dragReject) return theme.palette.error.main
+      if (dragAccept || image) return theme.palette.success.main
+      return null
     }};
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 500px;
+  padding: 7px 14px;
+  border-radius: 5px;
+
+  margin-bottom: 20px;
+
+  width: 480px;
+
+  @media (max-width: ${theme.breakpoints.values.sm}px) {
+    width: 230px;
+  }
 `
