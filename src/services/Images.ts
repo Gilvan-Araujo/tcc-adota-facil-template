@@ -2,7 +2,7 @@ import { imgbbApi } from '../api'
 
 export default {
   uploadImage: async (file: File) => {
-    if (!file) return
+    if (!file) return {}
 
     const body = new FormData()
 
@@ -14,6 +14,6 @@ export default {
         : ''
     )
 
-    imgbbApi.post('/upload', body)
+    return imgbbApi.post('/upload', body)
   }
 }
