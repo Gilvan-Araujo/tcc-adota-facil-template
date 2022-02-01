@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Load from '../components/Load'
 import Images from '../services/Images'
 import Pets from '../services/Pets'
-import HomeContainer from '../styles/Home'
+import HomeContainer from '../styles/pages/Home'
 
 function Home() {
   const [data, setData] = useState<any[]>([])

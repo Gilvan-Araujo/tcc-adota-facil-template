@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 import Load from '../../components/Load'
 import Images from '../../services/Images'
 import Pets from '../../services/Pets'
-import * as S from './styles'
+import * as S from '../../styles/pages/Form'
 
 const Form = () => {
   const [loading, setLoading] = useState(false)
