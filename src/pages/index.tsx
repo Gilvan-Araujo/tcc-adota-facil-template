@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -90,6 +91,9 @@ function Home() {
 
       <input type="file" name="" id="" onChange={handleUpload} />
       <Button onClick={addPet}>Adicionar pet aleatório</Button>
+      <Link href="/form">
+        <a>Ir para o form</a>
+      </Link>
     </HomeContainer>
   )
 }
