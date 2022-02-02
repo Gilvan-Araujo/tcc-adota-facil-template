@@ -77,7 +77,7 @@ function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <h1>Home page</h1>
       {data.map((item: any) => (
         <div key={uuidv4()}>
           {item.image && (
@@ -88,7 +88,6 @@ function Home() {
           </div>
         </div>
       ))}
-
       <input type="file" name="" id="" onChange={handleUpload} />
       <Button onClick={addPet}>Adicionar pet aleatório</Button>
       <Link href="/form">
