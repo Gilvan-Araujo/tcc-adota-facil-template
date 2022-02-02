@@ -23,6 +23,7 @@
         "peerDependencies": true
       }
     ],
-    "import/extensions": ["error", { "js": "never", "jsx": "never" }]
+    "import/extensions": ["error", { "js": "never", "jsx": "never" }],
+    "jsx-a11y/anchor-is-valid": "off"
   }
 }
