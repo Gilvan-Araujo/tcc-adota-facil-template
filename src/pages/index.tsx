@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import Load from '../components/Load'
-import Images from '../services/Images'
 import Pets from '../services/Pets'
 import HomeContainer from '../styles/pages/Home'
 
@@ -29,39 +28,6 @@ function Home() {
     }
   }
 
-  const handleUpload = async (e: any) => {
-    const file = e.target.files[0]
-
-    Images.uploadImage(file)
-      .then((res) => {
-        console.log(res)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-
-  const addPet = () => {
-    setLoading(true)
-
-    const max = 500
-    const min = 400
-    const imageIndex = Math.floor(Math.random() * (max - min + 1) + min)
-
-    const newPet = {
-      name: `Pet ${Math.round(Math.random() * 100)}`,
-      type: 'dog',
-      image: `https://placedog.net/${imageIndex}/${imageIndex}`
-    }
-    try {
-      Pets.addPet(newPet).then(async () => {
-        getData()
-      })
-    } catch (error) {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
     getData()
   }, [])
@@ -78,20 +44,28 @@ function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>Home page</h1>
-      {data.map((item: any) => (
-        <div key={uuidv4()}>
-          {item.image && (
-            <Image src={item.image} alt={item.name} width={200} height={200} />
-          )}
-          <div key={uuidv4()}>
-            {item.name} - {item.type}
-          </div>
-        </div>
-      ))}
-      <input type="file" name="" id="" onChange={handleUpload} />
-      <Button onClick={addPet}>Adicionar pet aleatório</Button>
-      <Link href="/cadastrarPet">
-        <a>Ir para o form</a>
+      <Grid container spacing={3}>
+        {data.map((item: any) => (
+          <Grid item xs={12} sm={6} md={4} key={uuidv4()}>
+            {item.image && (
+              <Image
+                src={item.image}
+                alt={item.name}
+                width={300}
+                height={300}
+                objectFit="cover"
+              />
+            )}
+            <span>
+              {item.name} - {item.type}
+            </span>
+          </Grid>
+        ))}
+      </Grid>
+      <Link href="/cadastrarPet" passHref>
+        <Button variant="contained" color="primary">
+          Ir para o form
+        </Button>
       </Link>
     </HomeContainer>
   )
