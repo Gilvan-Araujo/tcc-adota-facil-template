@@ -1,10 +1,8 @@
 {
-  "plugins": ["jest"],
   "env": {
     "es6": true,
     "browser": true,
-    "es2021": true,
-    "jest/globals": true
+    "es2021": true
   },
   "parserOptions": {
     "ecmaVersion": 12,
@@ -20,8 +18,7 @@
         "devDependencies": [
           "**/*.stories.*",
           "**/.storybook/**/*.*",
-          "**/stories.*",
-          "**/__tests__/**/*.*"
+          "**/stories.*"
         ],
         "peerDependencies": true
       }
