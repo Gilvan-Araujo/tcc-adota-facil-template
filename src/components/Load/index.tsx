@@ -7,8 +7,8 @@ export type LoadProps = {
 }
 
 const Load = ({ loading }: LoadProps) => (
-  <S.CustomBackdrop open={loading}>
-    <S.Loader />
+  <S.CustomBackdrop data-testid="Load" open={loading}>
+    <S.Loader color="inherit" />
   </S.CustomBackdrop>
 )
 
