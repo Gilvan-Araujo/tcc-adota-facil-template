@@ -90,7 +90,7 @@ function Home() {
       ))}
       <input type="file" name="" id="" onChange={handleUpload} />
       <Button onClick={addPet}>Adicionar pet aleatório</Button>
-      <Link href="/form">
+      <Link href="/cadastrarPet">
         <a>Ir para o form</a>
       </Link>
     </HomeContainer>

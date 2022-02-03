@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useForm } from 'react-hook-form'
+import InputMask from 'react-input-mask'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 
@@ -9,6 +10,7 @@ import Load from '../../components/Load'
 import Images from '../../services/Images'
 import Pets from '../../services/Pets'
 import * as S from '../../styles/pages/Form'
+import createWhatsappLink from '../../utils/createWhatsappLink'
 
 const Form = () => {
   const [loading, setLoading] = useState(false)
@@ -19,16 +21,16 @@ const Form = () => {
       .required('Campo obrigatório')
       .typeError('Não é um texto'),
     age: Yup.number()
+      .required('Campo obrigatório')
       .typeError('Deve ser um número')
-      .moreThan(0, 'Deve ser maior que 0')
-      .required('Campo obrigatório'),
+      .moreThan(0, 'Deve ser maior que 0'),
     breed: Yup.string()
       .required('Campo obrigatório')
       .typeError('Não é um texto'),
     sex: Yup.string().required('Campo obrigatório').typeError('Não é um texto'),
-    email: Yup.string()
-      .email('E-mail inválido')
+    phone: Yup.string()
       .required('Campo obrigatório')
+      .matches(/^\(\d{2}\)\s\d{4,5}-\d{4}$/, 'Formato errado')
       .typeError('Não é um texto'),
     description: Yup.string().typeError('Não é um texto')
   })
@@ -54,7 +56,8 @@ const Form = () => {
 
     const newData = {
       ...data,
-      image: imageUrl
+      image: imageUrl,
+      phoneContact: createWhatsappLink(data.phone)
     }
 
     await Pets.addPet(newData)
@@ -119,6 +122,7 @@ const Form = () => {
             helperText={errors.age && errors.age.message}
           />
         </S.FormRow>
+
         <S.FormRow>
           <S.Input
             {...register('breed')}
@@ -138,16 +142,22 @@ const Form = () => {
             helperText={errors.sex && errors.sex.message}
           />
         </S.FormRow>
+
         <S.FormRow>
-          <S.LargeInput
-            {...register('email')}
-            label="E-mail"
-            placeholder="Digite o e-mail para contato"
-            variant="outlined"
-            error={!!errors.email}
-            helperText={errors.email && errors.email.message}
-          />
+          <InputMask {...register('phone')} mask="(99) 99999-9999">
+            {() => (
+              <S.Input
+                {...register('phone')}
+                label="Whatsapp"
+                placeholder="Digite um whatsapp para contato"
+                variant="outlined"
+                error={!!errors.phone}
+                helperText={errors.phone && errors.phone.message}
+              />
+            )}
+          </InputMask>
         </S.FormRow>
+
         <S.FormRow>
           <S.LargeInput
             {...register('description')}
@@ -160,6 +170,7 @@ const Form = () => {
             helperText={errors.description && errors.description.message}
           />
         </S.FormRow>
+
         <S.FormColumn>
           <S.ImageDropzoneLabel>Imagem do pet</S.ImageDropzoneLabel>
           <S.ImageDropzone
@@ -175,9 +186,10 @@ const Form = () => {
             {image && <p>Imagem adicionada</p>}
           </S.ImageDropzone>
         </S.FormColumn>
+
         <S.FormRow>
           <S.Button color="primary" variant="contained" type="submit">
-            Adicionar
+            Cadastrar
           </S.Button>
         </S.FormRow>
       </S.FormWrapper>
