@@ -44,15 +44,28 @@ const Form = () => {
   } = useForm({ resolver: yupResolver(schema) })
 
   const onSubmitHandler = async (data: any) => {
-    if (!image) return toast.error('Selecione uma imagem')
+    if (!image)
+      return toast.error('Selecione uma imagem', { toastId: 'pickAnImage' })
 
     setLoading(true)
 
     let imageUrl = ''
-    if (image) {
-      imageUrl = await Images.uploadImage(image).then(
-        (res: any) => res.data.data.url
+
+    await Images.uploadImage(image)
+      .then((response: any) => {
+        imageUrl = response.data.data.url
+      })
+      .catch(() =>
+        toast.error('Erro ao enviar imagem', {
+          toastId: 'uploadImageError'
+        })
       )
+
+    if (imageUrl === '') {
+      setLoading(false)
+      return toast.error('Erro ao enviar imagem', {
+        toastId: 'uploadImageError'
+      })
     }
 
     const newData = {
@@ -63,14 +76,22 @@ const Form = () => {
 
     await Pets.addPet(newData)
       .then(() => {
-        setLoading(false)
         reset()
         setImage(undefined)
-        return toast.success('Pet cadastrado com sucesso')
+        toast.success('Pet cadastrado com sucesso!', {
+          toastId: 'registerSuccess'
+        })
       })
-      .catch(() => {
+      .catch(() =>
+        toast.error(
+          'Ocorreu um erro ao cadastrar o pet. Por favor, tente novamente.',
+          {
+            toastId: 'registerError'
+          }
+        )
+      )
+      .finally(() => {
         setLoading(false)
-        return toast.error('Ocorreu um erro. Por favor, tente novamente.')
       })
 
     return {}
@@ -81,7 +102,8 @@ const Form = () => {
   }, [])
 
   const onDropRejected = useCallback(
-    () => toast.error('Formato de imagem inválido'),
+    () =>
+      toast.error('Formato de imagem inválido', { toastId: 'imageInvalid' }),
     []
   )
 
@@ -189,7 +211,6 @@ const Form = () => {
             dragAccept={isDragAccept}
             dragReject={isDragReject}
             image={image}
-            // data-cy="image-dropzone"
           >
             <input {...getInputProps()} data-cy="image-dropzone" />
             {isDragAccept && <p>Foto aceita</p>}
