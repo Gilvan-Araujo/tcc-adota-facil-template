@@ -24,6 +24,7 @@
       }
     ],
     "import/extensions": ["error", { "js": "never", "jsx": "never" }],
-    "jsx-a11y/anchor-is-valid": "off"
+    "jsx-a11y/anchor-is-valid": "off",
+    "camelcase": [2, { "properties": "always" }]
   }
 }
