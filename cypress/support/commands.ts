@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('dataCy', (testId) => {
+  cy.get(`[data-cy=${testId}]`)
+})
+
+Cypress.Commands.add('requiredExist', () => {
+  cy.contains('Campo obrigatório').should('exist')
+})
+
+Cypress.Commands.add('requiredNotExist', () => {
+  cy.contains('Campo obrigatório').should('not.exist')
+})

@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import Head from 'next/head'
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useForm } from 'react-hook-form'
@@ -100,8 +101,12 @@ const Form = () => {
     <>
       <Load loading={loading} />
 
+      <Head>
+        <title>Cadastrar Pet</title>
+      </Head>
+
       <S.FormWrapper onSubmit={handleSubmit(onSubmitHandler)}>
-        <S.FormTitle>Cadastro de Pet</S.FormTitle>
+        <S.FormTitle data-cy="page-title">Cadastrar Pet</S.FormTitle>
         <S.FormRow>
           <S.Input
             {...register('name')}
@@ -110,6 +115,7 @@ const Form = () => {
             variant="outlined"
             error={!!errors.name}
             helperText={errors.name && errors.name.message}
+            data-cy="name"
           />
 
           <S.Input
@@ -120,6 +126,7 @@ const Form = () => {
             type="number"
             error={!!errors.age}
             helperText={errors.age && errors.age.message}
+            data-cy="age"
           />
         </S.FormRow>
 
@@ -131,6 +138,7 @@ const Form = () => {
             variant="outlined"
             error={!!errors.breed}
             helperText={errors.breed && errors.breed.message}
+            data-cy="breed"
           />
 
           <S.Input
@@ -140,6 +148,7 @@ const Form = () => {
             variant="outlined"
             error={!!errors.sex}
             helperText={errors.sex && errors.sex.message}
+            data-cy="sex"
           />
         </S.FormRow>
 
@@ -153,6 +162,7 @@ const Form = () => {
                 variant="outlined"
                 error={!!errors.phone}
                 helperText={errors.phone && errors.phone.message}
+                data-cy="phone"
               />
             )}
           </InputMask>
@@ -168,6 +178,7 @@ const Form = () => {
             rows={4}
             error={!!errors.description}
             helperText={errors.description && errors.description.message}
+            data-cy="description"
           />
         </S.FormRow>
 
@@ -178,8 +189,9 @@ const Form = () => {
             dragAccept={isDragAccept}
             dragReject={isDragReject}
             image={image}
+            // data-cy="image-dropzone"
           >
-            <input {...getInputProps()} />
+            <input {...getInputProps()} data-cy="image-dropzone" />
             {isDragAccept && <p>Foto aceita</p>}
             {isDragReject && <p>Foto inválida</p>}
             {!isDragActive && <p>Arraste a foto ou clique para selecionar</p>}
@@ -188,7 +200,12 @@ const Form = () => {
         </S.FormColumn>
 
         <S.FormRow>
-          <S.Button color="primary" variant="contained" type="submit">
+          <S.Button
+            color="primary"
+            variant="contained"
+            type="submit"
+            data-cy="submit-button"
+          >
             Cadastrar
           </S.Button>
         </S.FormRow>
