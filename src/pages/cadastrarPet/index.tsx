@@ -21,6 +21,9 @@ const Form = () => {
     name: Yup.string()
       .required('Campo obrigatório')
       .typeError('Não é um texto'),
+    type: Yup.string()
+      .required('Campo obrigatório')
+      .typeError('Não é um texto'),
     age: Yup.number()
       .required('Campo obrigatório')
       .typeError('Deve ser um número')
@@ -133,7 +136,7 @@ const Form = () => {
           <S.Input
             {...register('name')}
             label="Nome"
-            placeholder="Digite o nome"
+            placeholder="Como o pet é chamado"
             variant="outlined"
             error={!!errors.name}
             helperText={errors.name && errors.name.message}
@@ -141,46 +144,56 @@ const Form = () => {
           />
 
           <S.Input
+            {...register('type')}
+            label="Tipo"
+            placeholder="Cachorro ou Gato"
+            variant="outlined"
+            error={!!errors.type}
+            helperText={errors.type && errors.type.message}
+            data-cy="type"
+          />
+        </S.FormRow>
+
+        <S.FormRow>
+          <S.Input
             {...register('age')}
             label="Idade"
-            placeholder="Digite a idade"
+            placeholder="Em anos"
             variant="outlined"
             type="number"
             error={!!errors.age}
             helperText={errors.age && errors.age.message}
             data-cy="age"
           />
-        </S.FormRow>
 
-        <S.FormRow>
           <S.Input
             {...register('breed')}
             label="Raça"
-            placeholder="Digite a raça"
+            placeholder="Ex.: vira-lata, siamês, etc"
             variant="outlined"
             error={!!errors.breed}
             helperText={errors.breed && errors.breed.message}
             data-cy="breed"
           />
+        </S.FormRow>
 
+        <S.FormRow>
           <S.Input
             {...register('sex')}
             label="Sexo"
-            placeholder="Digite o sexo"
+            placeholder="Masculino ou feminino"
             variant="outlined"
             error={!!errors.sex}
             helperText={errors.sex && errors.sex.message}
             data-cy="sex"
           />
-        </S.FormRow>
 
-        <S.FormRow>
           <InputMask {...register('phone')} mask="(99) 99999-9999">
             {() => (
               <S.Input
                 {...register('phone')}
                 label="Whatsapp"
-                placeholder="Digite um whatsapp para contato"
+                placeholder="Número para contato"
                 variant="outlined"
                 error={!!errors.phone}
                 helperText={errors.phone && errors.phone.message}
@@ -194,7 +207,7 @@ const Form = () => {
           <S.LargeInput
             {...register('description')}
             label="Descrição"
-            placeholder="Digite a descrição"
+            placeholder="Descreva o pet em detalhes"
             variant="outlined"
             multiline
             rows={4}

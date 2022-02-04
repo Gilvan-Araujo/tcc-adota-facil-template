@@ -20,6 +20,20 @@ describe('Add pet page', () => {
   it('should not allow users to register a pet without a name', () => {
     expect(cy.requiredNotExist())
 
+    cy.dataCy('type').type('Cachorro')
+    cy.dataCy('age').type('10')
+    cy.dataCy('breed').type('Pastor alemão')
+    cy.dataCy('sex').type('Masculino')
+    cy.dataCy('phone').type('83996481242')
+    cy.dataCy('submit-button').click()
+
+    expect(cy.requiredExist())
+  })
+
+  it('should not allow users to register a pet without a type', () => {
+    expect(cy.requiredNotExist())
+
+    cy.dataCy('name').type('Teste')
     cy.dataCy('age').type('10')
     cy.dataCy('breed').type('Pastor alemão')
     cy.dataCy('sex').type('Masculino')
@@ -33,6 +47,7 @@ describe('Add pet page', () => {
     expect(cy.contains('Deve ser um número').should('not.exist'))
 
     cy.dataCy('name').type('Teste')
+    cy.dataCy('type').type('Cachorro')
     cy.dataCy('breed').type('Pastor alemão')
     cy.dataCy('sex').type('Masculino')
     cy.dataCy('phone').type('83996481242')
@@ -45,6 +60,7 @@ describe('Add pet page', () => {
     expect(cy.requiredNotExist())
 
     cy.dataCy('name').type('Teste')
+    cy.dataCy('type').type('Cachorro')
     cy.dataCy('age').type('10')
     cy.dataCy('sex').type('Masculino')
     cy.dataCy('phone').type('83996481242')
@@ -57,6 +73,7 @@ describe('Add pet page', () => {
     expect(cy.requiredNotExist())
 
     cy.dataCy('name').type('Teste')
+    cy.dataCy('type').type('Cachorro')
     cy.dataCy('age').type('10')
     cy.dataCy('breed').type('Pastor alemão')
     cy.dataCy('sex').type('Masculino')
@@ -69,6 +86,7 @@ describe('Add pet page', () => {
     expect(cy.requiredNotExist())
 
     cy.dataCy('name').type('Teste')
+    cy.dataCy('type').type('Cachorro')
     cy.dataCy('age').type('10')
     cy.dataCy('breed').type('Pastor alemão')
     cy.dataCy('sex').type('Masculino')
@@ -84,6 +102,7 @@ describe('Add pet page', () => {
     })
 
     cy.dataCy('name').type('Teste')
+    cy.dataCy('type').type('Cachorro')
     cy.dataCy('age').type('10')
     cy.dataCy('breed').type('Pastor alemão')
     cy.dataCy('sex').type('Masculino')
@@ -100,6 +119,7 @@ describe('Add pet page', () => {
     })
 
     cy.dataCy('name').type('Teste')
+    cy.dataCy('type').type('Cachorro')
     cy.dataCy('age').type('10')
     cy.dataCy('breed').type('Pastor alemão')
     cy.dataCy('sex').type('Masculino')
@@ -112,6 +132,7 @@ describe('Add pet page', () => {
 
   it('should display the invalid image error toast', () => {
     cy.dataCy('name').type('Teste')
+    cy.dataCy('type').type('Cachorro')
     cy.dataCy('age').type('10')
     cy.dataCy('breed').type('Pastor alemão')
     cy.dataCy('sex').type('Masculino')
@@ -137,6 +158,7 @@ describe('Add pet page', () => {
     })
 
     cy.dataCy('name').type('Teste')
+    cy.dataCy('type').type('Cachorro')
     cy.dataCy('age').type('10')
     cy.dataCy('breed').type('Pastor alemão')
     cy.dataCy('sex').type('Masculino')
