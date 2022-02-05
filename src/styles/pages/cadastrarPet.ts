@@ -27,7 +27,7 @@ export const FormTitle = styled.h1`
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
-  margin: 20px 0;
+  margin: 0 0 20px 0;
 `
 
 export const FormRow = styled.div`

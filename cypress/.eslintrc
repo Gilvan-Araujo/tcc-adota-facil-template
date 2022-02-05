@@ -7,7 +7,9 @@
     "cypress/assertion-before-screenshot": "warn",
     "cypress/no-force": "warn",
     "cypress/no-async-tests": "error",
-    "cypress/no-pause": "error"
+    "cypress/no-pause": "error",
+    "import/no-extraneous-dependencies": "off",
+    "no-unused-expressions": ["error", { "allowShortCircuit": true }]
   },
   "env": {
     "cypress/globals": true

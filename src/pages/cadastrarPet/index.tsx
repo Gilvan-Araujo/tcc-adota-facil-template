@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import Head from 'next/head'
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useForm } from 'react-hook-form'
@@ -9,7 +10,7 @@ import * as Yup from 'yup'
 import Load from '../../components/Load'
 import Images from '../../services/Images'
 import Pets from '../../services/Pets'
-import * as S from '../../styles/pages/Form'
+import * as S from '../../styles/pages/cadastrarPet'
 import createWhatsappLink from '../../utils/createWhatsappLink'
 
 const Form = () => {
@@ -18,6 +19,9 @@ const Form = () => {
 
   const schema = Yup.object().shape({
     name: Yup.string()
+      .required('Campo obrigatório')
+      .typeError('Não é um texto'),
+    type: Yup.string()
       .required('Campo obrigatório')
       .typeError('Não é um texto'),
     age: Yup.number()
@@ -43,15 +47,28 @@ const Form = () => {
   } = useForm({ resolver: yupResolver(schema) })
 
   const onSubmitHandler = async (data: any) => {
-    if (!image) return toast.error('Selecione uma imagem')
+    if (!image)
+      return toast.error('Selecione uma imagem', { toastId: 'pickAnImage' })
 
     setLoading(true)
 
     let imageUrl = ''
-    if (image) {
-      imageUrl = await Images.uploadImage(image).then(
-        (res: any) => res.data.data.url
+
+    await Images.uploadImage(image)
+      .then((response: any) => {
+        imageUrl = response.data.data.url
+      })
+      .catch(() =>
+        toast.error('Erro ao enviar imagem', {
+          toastId: 'uploadImageError'
+        })
       )
+
+    if (imageUrl === '') {
+      setLoading(false)
+      return toast.error('Erro ao enviar imagem', {
+        toastId: 'uploadImageError'
+      })
     }
 
     const newData = {
@@ -62,14 +79,22 @@ const Form = () => {
 
     await Pets.addPet(newData)
       .then(() => {
-        setLoading(false)
         reset()
         setImage(undefined)
-        return toast.success('Pet cadastrado com sucesso')
+        toast.success('Pet cadastrado com sucesso!', {
+          toastId: 'registerSuccess'
+        })
       })
-      .catch(() => {
+      .catch(() =>
+        toast.error(
+          'Ocorreu um erro ao cadastrar o pet. Por favor, tente novamente.',
+          {
+            toastId: 'registerError'
+          }
+        )
+      )
+      .finally(() => {
         setLoading(false)
-        return toast.error('Ocorreu um erro. Por favor, tente novamente.')
       })
 
     return {}
@@ -80,7 +105,8 @@ const Form = () => {
   }, [])
 
   const onDropRejected = useCallback(
-    () => toast.error('Formato de imagem inválido'),
+    () =>
+      toast.error('Formato de imagem inválido', { toastId: 'imageInvalid' }),
     []
   )
 
@@ -100,59 +126,78 @@ const Form = () => {
     <>
       <Load loading={loading} />
 
+      <Head>
+        <title>Cadastrar Pet</title>
+      </Head>
+
       <S.FormWrapper onSubmit={handleSubmit(onSubmitHandler)}>
-        <S.FormTitle>Cadastro de Pet</S.FormTitle>
+        <S.FormTitle data-cy="page-title">Cadastrar Pet</S.FormTitle>
         <S.FormRow>
           <S.Input
             {...register('name')}
             label="Nome"
-            placeholder="Digite o nome"
+            placeholder="Como o pet é chamado"
             variant="outlined"
             error={!!errors.name}
             helperText={errors.name && errors.name.message}
+            data-cy="name"
           />
 
           <S.Input
+            {...register('type')}
+            label="Tipo"
+            placeholder="Cachorro ou Gato"
+            variant="outlined"
+            error={!!errors.type}
+            helperText={errors.type && errors.type.message}
+            data-cy="type"
+          />
+        </S.FormRow>
+
+        <S.FormRow>
+          <S.Input
             {...register('age')}
             label="Idade"
-            placeholder="Digite a idade"
+            placeholder="Em anos"
             variant="outlined"
             type="number"
             error={!!errors.age}
             helperText={errors.age && errors.age.message}
+            data-cy="age"
           />
-        </S.FormRow>
 
-        <S.FormRow>
           <S.Input
             {...register('breed')}
             label="Raça"
-            placeholder="Digite a raça"
+            placeholder="Ex.: vira-lata, siamês, etc"
             variant="outlined"
             error={!!errors.breed}
             helperText={errors.breed && errors.breed.message}
-          />
-
-          <S.Input
-            {...register('sex')}
-            label="Sexo"
-            placeholder="Digite o sexo"
-            variant="outlined"
-            error={!!errors.sex}
-            helperText={errors.sex && errors.sex.message}
+            data-cy="breed"
           />
         </S.FormRow>
 
         <S.FormRow>
+          <S.Input
+            {...register('sex')}
+            label="Sexo"
+            placeholder="Masculino ou feminino"
+            variant="outlined"
+            error={!!errors.sex}
+            helperText={errors.sex && errors.sex.message}
+            data-cy="sex"
+          />
+
           <InputMask {...register('phone')} mask="(99) 99999-9999">
             {() => (
               <S.Input
                 {...register('phone')}
                 label="Whatsapp"
-                placeholder="Digite um whatsapp para contato"
+                placeholder="Número para contato"
                 variant="outlined"
                 error={!!errors.phone}
                 helperText={errors.phone && errors.phone.message}
+                data-cy="phone"
               />
             )}
           </InputMask>
@@ -162,12 +207,13 @@ const Form = () => {
           <S.LargeInput
             {...register('description')}
             label="Descrição"
-            placeholder="Digite a descrição"
+            placeholder="Descreva o pet em detalhes"
             variant="outlined"
             multiline
             rows={4}
             error={!!errors.description}
             helperText={errors.description && errors.description.message}
+            data-cy="description"
           />
         </S.FormRow>
 
@@ -179,7 +225,7 @@ const Form = () => {
             dragReject={isDragReject}
             image={image}
           >
-            <input {...getInputProps()} />
+            <input {...getInputProps()} data-cy="image-dropzone" />
             {isDragAccept && <p>Foto aceita</p>}
             {isDragReject && <p>Foto inválida</p>}
             {!isDragActive && <p>Arraste a foto ou clique para selecionar</p>}
@@ -188,7 +234,12 @@ const Form = () => {
         </S.FormColumn>
 
         <S.FormRow>
-          <S.Button color="primary" variant="contained" type="submit">
+          <S.Button
+            color="primary"
+            variant="contained"
+            type="submit"
+            data-cy="submit-button"
+          >
             Cadastrar
           </S.Button>
         </S.FormRow>

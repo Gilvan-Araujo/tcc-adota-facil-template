@@ -6,5 +6,5 @@ export const api = axios.create({
 })
 
 export const imgbbApi = axios.create({
-  baseURL: 'https://api.imgbb.com/1/upload'
+  baseURL: 'https://api.imgbb.com/1'
 })
