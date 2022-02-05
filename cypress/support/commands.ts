@@ -35,3 +35,38 @@ Cypress.Commands.add('requiredExist', () => {
 Cypress.Commands.add('requiredNotExist', () => {
   cy.contains('Campo obrigatório').should('not.exist')
 })
+
+Cypress.Commands.add(
+  'customFillFormFields',
+  (
+    dataCyIdToSkip: 'name' | 'type' | 'age' | 'breed' | 'sex' | 'phone' | '',
+    submit: boolean
+  ) => {
+    dataCyIdToSkip !== 'name' && cy.dataCy('name').type('Teste')
+    dataCyIdToSkip !== 'type' && cy.dataCy('type').type('Cachorro')
+    dataCyIdToSkip !== 'age' && cy.dataCy('age').type('10')
+    dataCyIdToSkip !== 'breed' && cy.dataCy('breed').type('Pastor alemão')
+    dataCyIdToSkip !== 'sex' && cy.dataCy('sex').type('Masculino')
+    dataCyIdToSkip !== 'phone' && cy.dataCy('phone').type('83996481242')
+    submit && cy.dataCy('submit-button').click()
+  }
+)
+
+Cypress.Commands.add('interceptImageUpload', (status: number, url: string) => {
+  cy.intercept('POST', 'https://api.imgbb.com/1/upload', {
+    statusCode: status,
+    body: {
+      data: {
+        data: {
+          url
+        }
+      }
+    }
+  })
+})
+
+Cypress.Commands.add('interceptAddPet', (status: number) => {
+  cy.intercept('POST', 'http://localhost:3000/api/addPet', {
+    statusCode: status
+  })
+})

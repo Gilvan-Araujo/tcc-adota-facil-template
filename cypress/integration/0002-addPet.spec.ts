@@ -20,12 +20,7 @@ describe('Add pet page', () => {
   it('should not allow users to register a pet without a name', () => {
     expect(cy.requiredNotExist())
 
-    cy.dataCy('type').type('Cachorro')
-    cy.dataCy('age').type('10')
-    cy.dataCy('breed').type('Pastor alemão')
-    cy.dataCy('sex').type('Masculino')
-    cy.dataCy('phone').type('83996481242')
-    cy.dataCy('submit-button').click()
+    cy.customFillFormFields('name', true)
 
     expect(cy.requiredExist())
   })
@@ -33,25 +28,15 @@ describe('Add pet page', () => {
   it('should not allow users to register a pet without a type', () => {
     expect(cy.requiredNotExist())
 
-    cy.dataCy('name').type('Teste')
-    cy.dataCy('age').type('10')
-    cy.dataCy('breed').type('Pastor alemão')
-    cy.dataCy('sex').type('Masculino')
-    cy.dataCy('phone').type('83996481242')
-    cy.dataCy('submit-button').click()
+    cy.customFillFormFields('type', true)
 
     expect(cy.requiredExist())
   })
 
-  it('should not allow users to register a pet without a sex', () => {
+  it('should not allow users to register a pet without an age', () => {
     expect(cy.contains('Deve ser um número').should('not.exist'))
 
-    cy.dataCy('name').type('Teste')
-    cy.dataCy('type').type('Cachorro')
-    cy.dataCy('breed').type('Pastor alemão')
-    cy.dataCy('sex').type('Masculino')
-    cy.dataCy('phone').type('83996481242')
-    cy.dataCy('submit-button').click()
+    cy.customFillFormFields('age', true)
 
     expect(cy.contains('Deve ser um número').should('exist'))
   })
@@ -59,12 +44,15 @@ describe('Add pet page', () => {
   it('should not allow users to register a pet without a breed', () => {
     expect(cy.requiredNotExist())
 
-    cy.dataCy('name').type('Teste')
-    cy.dataCy('type').type('Cachorro')
-    cy.dataCy('age').type('10')
-    cy.dataCy('sex').type('Masculino')
-    cy.dataCy('phone').type('83996481242')
-    cy.dataCy('submit-button').click()
+    cy.customFillFormFields('breed', true)
+
+    expect(cy.requiredExist())
+  })
+
+  it('should not allow users to register a pet without a sex', () => {
+    expect(cy.requiredNotExist())
+
+    cy.customFillFormFields('sex', true)
 
     expect(cy.requiredExist())
   })
@@ -72,12 +60,7 @@ describe('Add pet page', () => {
   it('should not allow users to register a pet without a phone number', () => {
     expect(cy.requiredNotExist())
 
-    cy.dataCy('name').type('Teste')
-    cy.dataCy('type').type('Cachorro')
-    cy.dataCy('age').type('10')
-    cy.dataCy('breed').type('Pastor alemão')
-    cy.dataCy('sex').type('Masculino')
-    cy.dataCy('submit-button').click()
+    cy.customFillFormFields('phone', true)
 
     expect(cy.requiredExist())
   })
@@ -85,28 +68,15 @@ describe('Add pet page', () => {
   it('should not allow users to register a pet without an image', () => {
     expect(cy.requiredNotExist())
 
-    cy.dataCy('name').type('Teste')
-    cy.dataCy('type').type('Cachorro')
-    cy.dataCy('age').type('10')
-    cy.dataCy('breed').type('Pastor alemão')
-    cy.dataCy('sex').type('Masculino')
-    cy.dataCy('phone').type('83996481242')
-    cy.dataCy('submit-button').click()
+    cy.customFillFormFields('', true)
 
     expect(cy.get('[id=pickAnImage]').should('be.visible'))
   })
 
   it('should display the image upload error toast correctly', () => {
-    cy.intercept('POST', 'https://api.imgbb.com/1/upload', {
-      statusCode: 400
-    })
+    cy.interceptImageUpload(400, '')
 
-    cy.dataCy('name').type('Teste')
-    cy.dataCy('type').type('Cachorro')
-    cy.dataCy('age').type('10')
-    cy.dataCy('breed').type('Pastor alemão')
-    cy.dataCy('sex').type('Masculino')
-    cy.dataCy('phone').type('83996481242')
+    cy.customFillFormFields('', false)
     cy.dataCy('image-dropzone').attachFile('validFile.png')
     cy.dataCy('submit-button').click()
 
@@ -114,16 +84,9 @@ describe('Add pet page', () => {
   })
 
   it('should display the register pet error toast correctly', () => {
-    cy.intercept('POST', 'http://localhost:3000/api/addPet', {
-      statusCode: 400
-    })
+    cy.interceptAddPet(400)
 
-    cy.dataCy('name').type('Teste')
-    cy.dataCy('type').type('Cachorro')
-    cy.dataCy('age').type('10')
-    cy.dataCy('breed').type('Pastor alemão')
-    cy.dataCy('sex').type('Masculino')
-    cy.dataCy('phone').type('83996481242')
+    cy.customFillFormFields('', false)
     cy.dataCy('image-dropzone').attachFile('validFile.png')
     cy.dataCy('submit-button').click()
 
@@ -131,38 +94,17 @@ describe('Add pet page', () => {
   })
 
   it('should display the invalid image error toast', () => {
-    cy.dataCy('name').type('Teste')
-    cy.dataCy('type').type('Cachorro')
-    cy.dataCy('age').type('10')
-    cy.dataCy('breed').type('Pastor alemão')
-    cy.dataCy('sex').type('Masculino')
-    cy.dataCy('phone').type('83996481242')
+    cy.customFillFormFields('', false)
     cy.dataCy('image-dropzone').attachFile('invalidFile.pdf')
 
     expect(cy.get('[id=imageInvalid]').should('be.visible'))
   })
 
   it('should complete the whole process of adding a pet', () => {
-    cy.intercept('POST', 'https://api.imgbb.com/1/upload', {
-      statusCode: 200,
-      body: {
-        data: {
-          data: {
-            url: 'any-url'
-          }
-        }
-      }
-    })
-    cy.intercept('POST', 'http://localhost:3000/api/addPet', {
-      statusCode: 200
-    })
+    cy.interceptImageUpload(200, 'image.jpg')
+    cy.interceptAddPet(200)
 
-    cy.dataCy('name').type('Teste')
-    cy.dataCy('type').type('Cachorro')
-    cy.dataCy('age').type('10')
-    cy.dataCy('breed').type('Pastor alemão')
-    cy.dataCy('sex').type('Masculino')
-    cy.dataCy('phone').type('83996481242')
+    cy.customFillFormFields('', false)
     cy.dataCy('image-dropzone').attachFile('validFile.png')
     cy.dataCy('submit-button').click()
 

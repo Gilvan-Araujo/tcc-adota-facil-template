@@ -26,10 +26,32 @@ declare global {
       requiredNotExist(): Chainable<Element>
 
       /**
-       * Custom command to drop an image file into a file input.
-       * @example cy.dropFile()
+       * Custom command to fill out form fields and skip a specified field. Leave empty to fill all form fields. Second parameter is used to submit the form.
+       * @example cy.customFillFormFields('name', true)
        */
-      dropFile(fileName: any): Chainable<Element>
+      customFillFormFields(
+        dataCyIdToSkip:
+          | 'name'
+          | 'type'
+          | 'age'
+          | 'breed'
+          | 'sex'
+          | 'phone'
+          | '',
+        submit: boolean
+      ): Chainable<Element>
+
+      /**
+       * Custom command to intercept the api call to add a pet. Takes the status to be returned.
+       * @example cy.interceptAddPet(200)
+       */
+      interceptAddPet(status: number): Chainable<Element>
+
+      /**
+       * Custom command to intercept the api call to upload an image to imgBB. Takes the status to be returned and a possible url.
+       * @example cy.interceptImageUpload(200, 'image.jpg')
+       */
+      interceptImageUpload(status: number, imageUrl: string): Chainable<Element>
     }
   }
 }
