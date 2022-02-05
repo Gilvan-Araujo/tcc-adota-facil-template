@@ -1,4 +1,4 @@
-import { imgbbApi } from '../api'
+import { imgbbApi } from '@api/index'
 
 export default {
   uploadImage: async (file: File) => {

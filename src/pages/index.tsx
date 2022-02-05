@@ -5,9 +5,11 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import Load from '../components/Load'
-import Pets from '../services/Pets'
-import HomeContainer from '../styles/pages/Home'
+import Pets from '@services/Pets'
+
+import Load from '@components/Load'
+
+import HomeContainer from '@styles/pages/Home'
 
 function Home() {
   const [data, setData] = useState<any[]>([])

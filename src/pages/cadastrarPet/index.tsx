@@ -7,11 +7,14 @@ import InputMask from 'react-input-mask'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 
-import Load from '../../components/Load'
-import Images from '../../services/Images'
-import Pets from '../../services/Pets'
-import * as S from '../../styles/pages/cadastrarPet'
-import createWhatsappLink from '../../utils/createWhatsappLink'
+import Images from '@services/Images'
+import Pets from '@services/Pets'
+
+import createWhatsappLink from '@utils/createWhatsappLink'
+
+import Load from '@components/Load'
+
+import * as S from '@styles/pages/cadastrarPet'
 
 const Form = () => {
   const [loading, setLoading] = useState(false)
