@@ -5,7 +5,15 @@
   "tabWidth": 2,
   "trailingComma": "none",
   "semi": false,
-  "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "^@api/(.*)$",
+    "^@services/(.*)$",
+    "^@utils/(.*)$",
+    "^@components/(.*)$",
+    "^@styles/(.*)$",
+    "^[./]"
+  ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }

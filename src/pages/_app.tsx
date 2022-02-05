@@ -8,8 +8,8 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { ThemeProvider as StyledProvider } from 'styled-components'
 
-import GlobalStyle from '../styles/global'
-import theme from '../styles/theme'
+import GlobalStyle from '@styles/global'
+import theme from '@styles/theme'
 
 function MyApp({ Component, pageProps }: AppProps) {
   React.useEffect(() => {
