@@ -12,7 +12,12 @@ module.exports = async (req: any, res: any) => {
       q.Map(q.Paginate(q.Match(q.Index('all_pets'))), (ref: any) => q.Get(ref))
     )
 
-    res.status(200).json(dbs.data)
+    res.status(200).json(
+      dbs.data.map((x: { data: any; ref: { id: any } }) => ({
+        ...x.data,
+        id: x.ref.id
+      }))
+    )
   } catch (error: any) {
     res.status(400).json({ error: error.message })
   }
