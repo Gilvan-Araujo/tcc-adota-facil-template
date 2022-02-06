@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Card({ pet }: CardProps) {
   const classes = useStyles()
-  const [expanded, setExpanded] = useState(true)
+  const [expanded, setExpanded] = useState(false)
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
