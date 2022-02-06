@@ -90,9 +90,7 @@ describe('Add pet page', () => {
     cy.dataCy('image-dropzone').attachFile('validFile.png')
     cy.dataCy('submit-button').click()
 
-    expect(
-      cy.get('[id=registerError]', { timeout: 40000 }).should('be.visible')
-    )
+    expect(cy.get('[id=registerError]').should('be.visible'))
   })
 
   it('should display the invalid image error toast', () => {
