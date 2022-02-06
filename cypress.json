@@ -1,7 +1,5 @@
 {
   "chromeWebSecurity": false,
-  "video": false,
-  "screenshotOnRunFailure": false,
   "component": {
     "testFiles": "**/*.test.{js,ts,jsx,tsx}",
     "componentFolder": "src"
