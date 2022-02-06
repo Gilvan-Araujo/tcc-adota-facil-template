@@ -17,7 +17,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import WhatsAppIcon from '@material-ui/icons/WhatsApp'
 import clsx from 'clsx'
 import React, { useState } from 'react'
+import NumberFormat from 'react-number-format'
 import { Pet } from 'types'
+
+import Slider from '@components/Slider'
 
 export type CardProps = {
   pet: Pet
@@ -31,9 +34,6 @@ const useStyles = makeStyles((theme: Theme) =>
     media: {
       height: 250,
       width: 250
-    },
-    content: {
-      marginBottom: theme.spacing(0)
     },
     expand: {
       transform: 'rotate(0deg)',
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Card({ pet }: CardProps) {
   const classes = useStyles()
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(true)
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -71,15 +71,28 @@ export default function Card({ pet }: CardProps) {
         }
       />
       <CardMedia className={classes.media} image={pet.image} title={pet.name} />
-      <CardContent className={classes.content}>
+      <CardContent>
         <Typography variant="subtitle2" color="textSecondary" component="p">
-          Expanda para ver mais detalhes
+          Expanda para ver mais detalhes / Abra o menu para mais opções
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="Mandar mensagem no Whatsapp">
           <WhatsAppIcon />
         </IconButton>
+        <Slider
+          leftCommitted
+          leftFunction={() => {
+            window.open(pet.phoneContact, '_blank')
+          }}
+          middleFunction={() => {
+            setExpanded(false)
+          }}
+          rightCommitted={false}
+          rightFunction={() => {
+            setExpanded(true)
+          }}
+        />
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded
@@ -104,6 +117,14 @@ export default function Card({ pet }: CardProps) {
           </Typography>
           <Typography paragraph variant="body1" color="textSecondary">
             Descrição: {pet.description}
+          </Typography>
+          <Typography paragraph variant="body1" color="textSecondary">
+            Contato:{' '}
+            <NumberFormat
+              value={pet.phone}
+              displayType="text"
+              format="(##) # ####-####"
+            />
           </Typography>
         </CardContent>
       </Collapse>
