@@ -5,7 +5,8 @@ export type Pet = {
   age: number
   breed: string
   sex: string
-  phoneUrl: string
+  phone: string
+  phoneContact: string
   description: string
   image: string
 }
