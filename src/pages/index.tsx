@@ -24,7 +24,7 @@ function Home() {
           </Button>
         </Link>
 
-        <Link href="/cadastrarPet" passHref>
+        <Link href="/pet/novo" passHref>
           <Button variant="contained" color="primary">
             Ir para o form
           </Button>
