@@ -8,7 +8,13 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "extends": ["next/core-web-vitals", "airbnb", "prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "airbnb",
+    "prettier",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
   "rules": {
     "react/jsx-filename-extension": "off",
     "react/jsx-props-no-spreading": "off",
