@@ -18,9 +18,13 @@ export const FormWrapper = styled.form`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   gap: 20px;
   padding: 40px;
+
+  @media (max-width: ${theme.breakpoints.values.sm}px) {
+    height: 100%;
+  }
 `
 
 export const FormTitle = styled.h1`
