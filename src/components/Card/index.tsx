@@ -6,6 +6,8 @@ import {
   Collapse,
   IconButton,
   Card as MUICard,
+  Menu,
+  MenuItem,
   Theme,
   Typography,
   createStyles,
@@ -51,12 +53,32 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
+const ITEM_HEIGHT = 48
+
 export default function Card({ pet }: CardProps) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
 
-  const handleExpandClick = () => {
+  // Menu-exclusive settings
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  const handleCloseWhatsapp = () => {
+    window.open(pet.phoneContact, '_blank')
+    setAnchorEl(null)
+  }
+
+  const handleCloseCollapse = () => {
     setExpanded(!expanded)
+    setAnchorEl(null)
   }
 
   return (
@@ -65,11 +87,34 @@ export default function Card({ pet }: CardProps) {
         title={`Nome: ${pet.name}`}
         subheader={`Idade: ${pet.age}`}
         action={
-          <IconButton aria-label="settings">
+          <IconButton
+            aria-label="mais configurações"
+            aria-controls="menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
             <MoreVertIcon />
           </IconButton>
         }
       />
+      <Menu
+        id="long-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            maxHeight: ITEM_HEIGHT * 4.5,
+            width: '20ch'
+          }
+        }}
+      >
+        <MenuItem onClick={handleCloseWhatsapp}>Falar no whatsapp</MenuItem>
+        <MenuItem onClick={handleCloseCollapse}>
+          {expanded ? 'Menos' : 'Mais'} detalhes
+        </MenuItem>
+      </Menu>
       <CardMedia className={classes.media} image={pet.image} title={pet.name} />
       <CardContent>
         <Typography variant="subtitle2" color="textSecondary" component="p">
@@ -77,7 +122,12 @@ export default function Card({ pet }: CardProps) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="Mandar mensagem no Whatsapp">
+        <IconButton
+          aria-label="mandar mensagem no whatsapp"
+          disableRipple
+          disableTouchRipple
+          disableFocusRipple
+        >
           <WhatsAppIcon />
         </IconButton>
         <Slider
@@ -97,9 +147,11 @@ export default function Card({ pet }: CardProps) {
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded
           })}
-          onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
+          aria-label="mostrar mais"
+          disableRipple
+          disableTouchRipple
+          disableFocusRipple
         >
           <ExpandMoreIcon />
         </IconButton>
