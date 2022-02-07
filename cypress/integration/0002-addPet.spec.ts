@@ -84,6 +84,7 @@ describe('Add pet page', () => {
   })
 
   it('should display the register pet error toast correctly', () => {
+    cy.interceptImageUpload(200, '')
     cy.interceptAddPet(400)
 
     cy.customFillFormFields('', false)
