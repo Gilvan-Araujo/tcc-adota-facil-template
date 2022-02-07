@@ -55,10 +55,6 @@ export default function Card({ pet }: CardProps) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded)
-  }
-
   return (
     <MUICard className={classes.root}>
       <CardHeader
@@ -77,7 +73,12 @@ export default function Card({ pet }: CardProps) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="Mandar mensagem no Whatsapp">
+        <IconButton
+          aria-label="mandar mensagem no whatsapp"
+          disableRipple
+          disableTouchRipple
+          disableFocusRipple
+        >
           <WhatsAppIcon />
         </IconButton>
         <Slider
@@ -97,9 +98,11 @@ export default function Card({ pet }: CardProps) {
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded
           })}
-          onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
+          aria-label="mostrar mais"
+          disableRipple
+          disableTouchRipple
+          disableFocusRipple
         >
           <ExpandMoreIcon />
         </IconButton>
