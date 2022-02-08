@@ -28,7 +28,7 @@ describe('Add pet page', () => {
   it('should not allow users to register a pet without a type', () => {
     expect(cy.requiredNotExist())
 
-    cy.customFillFormFields('type', true)
+    cy.customFillFormFields('type-dog', true)
 
     expect(cy.requiredExist())
   })
@@ -52,7 +52,7 @@ describe('Add pet page', () => {
   it('should not allow users to register a pet without a sex', () => {
     expect(cy.requiredNotExist())
 
-    cy.customFillFormFields('sex', true)
+    cy.customFillFormFields('sex-male', true)
 
     expect(cy.requiredExist())
   })

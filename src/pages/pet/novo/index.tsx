@@ -14,7 +14,7 @@ import createWhatsappLink from '@utils/createWhatsappLink'
 
 import Load from '@components/Load'
 
-import * as S from '@styles/pages/cadastrarPet'
+import * as S from '@styles/pages/pet-novo'
 
 const Form = () => {
   const [loading, setLoading] = useState(false)
@@ -25,6 +25,7 @@ const Form = () => {
       .required('Campo obrigatório')
       .typeError('Não é um texto'),
     type: Yup.string()
+      .nullable(true)
       .required('Campo obrigatório')
       .typeError('Não é um texto'),
     age: Yup.number()
@@ -34,7 +35,10 @@ const Form = () => {
     breed: Yup.string()
       .required('Campo obrigatório')
       .typeError('Não é um texto'),
-    sex: Yup.string().required('Campo obrigatório').typeError('Não é um texto'),
+    sex: Yup.string()
+      .nullable(true)
+      .required('Campo obrigatório')
+      .typeError('Não é um texto'),
     phone: Yup.string()
       .required('Campo obrigatório')
       .matches(/^\(\d{2}\)\s\d{4,5}-\d{4}$/, 'Formato errado')
@@ -146,15 +150,25 @@ const Form = () => {
             data-cy="name"
           />
 
-          <S.Input
-            {...register('type')}
-            label="Tipo"
-            placeholder="Cachorro ou Gato"
-            variant="outlined"
-            error={!!errors.type}
-            helperText={errors.type && errors.type.message}
-            data-cy="type"
-          />
+          <S.FormControl error={errors.type}>
+            <S.RadioGroup {...register('type')}>
+              <S.FormControlLabel
+                value="cachorro"
+                control={<S.Radio color="primary" data-cy="type-dog" />}
+                label="Cachorro"
+                labelPlacement="start"
+              />
+              <S.FormControlLabel
+                value="gato"
+                control={<S.Radio color="primary" data-cy="type-cat" />}
+                label="Gato"
+                labelPlacement="start"
+              />
+            </S.RadioGroup>
+            <S.FormHelperText variant="outlined">
+              {errors.type && errors.type.message}
+            </S.FormHelperText>
+          </S.FormControl>
         </S.FormRow>
 
         <S.FormRow>
@@ -181,15 +195,25 @@ const Form = () => {
         </S.FormRow>
 
         <S.FormRow>
-          <S.Input
-            {...register('sex')}
-            label="Sexo"
-            placeholder="Masculino ou feminino"
-            variant="outlined"
-            error={!!errors.sex}
-            helperText={errors.sex && errors.sex.message}
-            data-cy="sex"
-          />
+          <S.FormControl error={errors.sex}>
+            <S.RadioGroup {...register('sex')}>
+              <S.FormControlLabel
+                value="macho"
+                control={<S.Radio color="primary" data-cy="sex-male" />}
+                label="Macho"
+                labelPlacement="start"
+              />
+              <S.FormControlLabel
+                value="fêmea"
+                control={<S.Radio color="primary" data-cy="sex-female" />}
+                label="Fêmea"
+                labelPlacement="start"
+              />
+            </S.RadioGroup>
+            <S.FormHelperText variant="outlined">
+              {errors.sex && errors.sex.message}
+            </S.FormHelperText>
+          </S.FormControl>
 
           <InputMask {...register('phone')} mask="(99) 99999-9999">
             {() => (

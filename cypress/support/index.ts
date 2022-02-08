@@ -5,6 +5,7 @@ import 'cypress-file-upload'
 import './commands'
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
       /**
@@ -32,10 +33,12 @@ declare global {
       customFillFormFields(
         dataCyIdToSkip:
           | 'name'
-          | 'type'
+          | 'type-dog'
+          | 'type-cat'
           | 'age'
           | 'breed'
-          | 'sex'
+          | 'sex-male'
+          | 'sex-female'
           | 'phone'
           | '',
         submit: boolean
