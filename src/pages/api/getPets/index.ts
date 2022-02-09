@@ -1,14 +1,13 @@
-export {}
+import faunadb from 'faunadb'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-const faunadb = require('faunadb')
-
-const secret = process.env.FAUNADB_SECRET_KEY
+const secret = process.env.FAUNADB_SECRET_KEY || ''
 const q = faunadb.query
 const client = new faunadb.Client({ secret })
 
-module.exports = async (req: any, res: any) => {
+module.exports = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const dbs = await client.query(
+    const dbs: { data: any } = await client.query(
       q.Map(q.Paginate(q.Match(q.Index('all_pets'))), (ref: any) => q.Get(ref))
     )
 

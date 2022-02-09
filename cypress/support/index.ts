@@ -5,6 +5,7 @@ import 'cypress-file-upload'
 import './commands'
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
       /**
@@ -32,10 +33,30 @@ declare global {
       customFillFormFields(
         dataCyIdToSkip:
           | 'name'
-          | 'type'
+          | 'type-dog'
+          | 'type-cat'
           | 'age'
           | 'breed'
-          | 'sex'
+          | 'sex-male'
+          | 'sex-female'
+          | 'phone'
+          | '',
+        submit: boolean
+      ): Chainable<Element>
+
+      /**
+       * Custom command to fill out form fields (menu interaction) and skip a specified field. Leave empty to fill all form fields. Second parameter is used to submit the form.
+       * @example cy.customFillFormFields('name', true)
+       */
+      customFillFormFieldsMenu(
+        dataCyIdToSkip:
+          | 'name'
+          | 'type-dog'
+          | 'type-cat'
+          | 'age'
+          | 'breed'
+          | 'sex-male'
+          | 'sex-female'
           | 'phone'
           | '',
         submit: boolean

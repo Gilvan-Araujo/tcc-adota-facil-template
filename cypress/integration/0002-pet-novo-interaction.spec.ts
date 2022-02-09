@@ -1,6 +1,6 @@
 describe('Add pet page', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000/cadastrarPet')
+    cy.visit('http://localhost:3000/pet/novo/interacao')
   })
 
   it('should go to the right page', () => {
@@ -28,7 +28,7 @@ describe('Add pet page', () => {
   it('should not allow users to register a pet without a type', () => {
     expect(cy.requiredNotExist())
 
-    cy.customFillFormFields('type', true)
+    cy.customFillFormFields('type-dog', true)
 
     expect(cy.requiredExist())
   })
@@ -52,7 +52,7 @@ describe('Add pet page', () => {
   it('should not allow users to register a pet without a sex', () => {
     expect(cy.requiredNotExist())
 
-    cy.customFillFormFields('sex', true)
+    cy.customFillFormFields('sex-male', true)
 
     expect(cy.requiredExist())
   })

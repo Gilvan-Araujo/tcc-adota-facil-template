@@ -1,5 +1,10 @@
 import {
   Button as MUIButton,
+  FormControl as MUIFormControl,
+  FormControlLabel as MUIFormControlLabel,
+  FormHelperText as MUIFormHelperText,
+  Radio as MUIRadio,
+  RadioGroup as MUIRadioGroup,
   TextField as MUITextField
 } from '@material-ui/core'
 import styled from 'styled-components'
@@ -18,9 +23,13 @@ export const FormWrapper = styled.form`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   gap: 20px;
   padding: 40px;
+
+  @media (max-width: ${theme.breakpoints.values.sm}px) {
+    height: 100%;
+  }
 `
 
 export const FormTitle = styled.h1`
@@ -55,6 +64,24 @@ export const ImageDropzoneLabel = styled.label`
 `
 
 export const Input = styled(MUITextField)``
+
+export const FormControl = styled(MUIFormControl)`
+  width: 230px;
+`
+
+export const RadioGroup = styled(MUIRadioGroup)`
+  justify-content: center;
+  width: 230px;
+  height: 56px;
+`
+
+export const FormControlLabel = styled(MUIFormControlLabel)``
+
+export const Radio = styled(MUIRadio)``
+
+export const FormHelperText = styled(MUIFormHelperText)`
+  margin-bottom: 100px;
+`
 
 export const LargeInput = styled(MUITextField)`
   width: 480px;
