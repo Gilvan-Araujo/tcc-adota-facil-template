@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import Head from 'next/head'
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
@@ -14,7 +15,7 @@ import createWhatsappLink from '@utils/createWhatsappLink'
 
 import Load from '@components/Load'
 
-import * as S from '@styles/pages/pet-novo'
+import * as S from '@styles/pages/pet-novo-menu'
 
 const Form = () => {
   const [loading, setLoading] = useState(false)
@@ -150,24 +151,21 @@ const Form = () => {
             data-cy="name"
           />
 
-          <S.FormControl error={errors.type}>
-            <S.RadioGroup {...register('type')}>
-              <S.FormControlLabel
-                value="cachorro"
-                control={<S.Radio color="primary" data-cy="type-dog" />}
-                label="Cachorro"
-                labelPlacement="start"
-              />
-              <S.FormControlLabel
-                value="gato"
-                control={<S.Radio color="primary" data-cy="type-cat" />}
-                label="Gato"
-                labelPlacement="start"
-              />
-            </S.RadioGroup>
-            <S.FormHelperText variant="outlined">
-              {errors.type && errors.type.message}
-            </S.FormHelperText>
+          <S.FormControl variant="outlined" error={errors.type}>
+            <InputLabel>Tipo</InputLabel>
+            <Select {...register('type')} data-cy="type-select">
+              <MenuItem value="Cachorro" data-cy="type-dog">
+                Cachorro
+              </MenuItem>
+              <MenuItem value="Gato" data-cy="type-cat">
+                Gato
+              </MenuItem>
+            </Select>
+            {errors.type && (
+              <S.FormHelperText variant="outlined" required error={errors.type}>
+                {errors.type.message}
+              </S.FormHelperText>
+            )}
           </S.FormControl>
         </S.FormRow>
 
@@ -195,22 +193,17 @@ const Form = () => {
         </S.FormRow>
 
         <S.FormRow>
-          <S.FormControl error={errors.sex}>
-            <S.RadioGroup {...register('sex')}>
-              <S.FormControlLabel
-                value="macho"
-                control={<S.Radio color="primary" data-cy="sex-male" />}
-                label="Macho"
-                labelPlacement="start"
-              />
-              <S.FormControlLabel
-                value="fêmea"
-                control={<S.Radio color="primary" data-cy="sex-female" />}
-                label="Fêmea"
-                labelPlacement="start"
-              />
-            </S.RadioGroup>
-            <S.FormHelperText variant="outlined">
+          <S.FormControl variant="outlined" error={errors.sex}>
+            <InputLabel>Sexo</InputLabel>
+            <Select {...register('sex')} data-cy="sex-select">
+              <MenuItem value="Macho" data-cy="sex-male">
+                Macho
+              </MenuItem>
+              <MenuItem value="Fêmea" data-cy="sex-female">
+                Fêmea
+              </MenuItem>
+            </Select>
+            <S.FormHelperText variant="outlined" error={errors.type}>
               {errors.sex && errors.sex.message}
             </S.FormHelperText>
           </S.FormControl>

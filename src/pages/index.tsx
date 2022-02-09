@@ -24,9 +24,15 @@ function Home() {
           </Button>
         </Link>
 
-        <Link href="/pet/novo" passHref>
+        <Link href="/pet/novo/interacao" passHref>
           <Button variant="contained" color="primary">
-            Ir para o form
+            Ir para o form (interação direta)
+          </Button>
+        </Link>
+
+        <Link href="/pet/novo/menu" passHref>
+          <Button variant="contained" color="primary">
+            Ir para o form (menu)
           </Button>
         </Link>
       </HomeContainer>

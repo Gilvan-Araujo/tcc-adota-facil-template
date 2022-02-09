@@ -45,6 +45,24 @@ declare global {
       ): Chainable<Element>
 
       /**
+       * Custom command to fill out form fields (menu interaction) and skip a specified field. Leave empty to fill all form fields. Second parameter is used to submit the form.
+       * @example cy.customFillFormFields('name', true)
+       */
+      customFillFormFieldsMenu(
+        dataCyIdToSkip:
+          | 'name'
+          | 'type-dog'
+          | 'type-cat'
+          | 'age'
+          | 'breed'
+          | 'sex-male'
+          | 'sex-female'
+          | 'phone'
+          | '',
+        submit: boolean
+      ): Chainable<Element>
+
+      /**
        * Custom command to intercept the api call to add a pet. Takes the status to be returned.
        * @example cy.interceptAddPet(200)
        */

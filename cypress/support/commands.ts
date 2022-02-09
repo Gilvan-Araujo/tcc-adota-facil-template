@@ -61,6 +61,37 @@ Cypress.Commands.add(
   }
 )
 
+Cypress.Commands.add(
+  'customFillFormFieldsMenu',
+  (
+    dataCyIdToSkip:
+      | 'name'
+      | 'type-dog'
+      | 'type-cat'
+      | 'age'
+      | 'breed'
+      | 'sex-male'
+      | 'sex-female'
+      | 'phone'
+      | '',
+    submit: boolean
+  ) => {
+    dataCyIdToSkip !== 'name' && cy.dataCy('name').type('Teste')
+    if (dataCyIdToSkip !== 'type-dog') {
+      cy.dataCy('type-select').click()
+      cy.dataCy('type-dog').click()
+    }
+    dataCyIdToSkip !== 'age' && cy.dataCy('age').type('10')
+    dataCyIdToSkip !== 'breed' && cy.dataCy('breed').type('Pastor alemão')
+    if (dataCyIdToSkip !== 'sex-male') {
+      cy.dataCy('sex-select').click()
+      cy.dataCy('sex-male').click()
+    }
+    dataCyIdToSkip !== 'phone' && cy.dataCy('phone').type('83996481242')
+    submit && cy.dataCy('submit-button').click()
+  }
+)
+
 Cypress.Commands.add('interceptImageUpload', (status: number, url: string) => {
   cy.intercept('POST', 'https://api.imgbb.com/1/upload', {
     statusCode: status,
