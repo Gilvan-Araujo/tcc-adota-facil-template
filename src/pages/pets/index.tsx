@@ -1,4 +1,6 @@
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Head from 'next/head'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Pet } from 'types'
@@ -44,7 +46,18 @@ const AllPets = () => {
       <Load loading={loading} />
 
       <S.PageWrapper>
-        <S.PageTitle>Lista de pets</S.PageTitle>
+        <S.PageTitle>
+          <Link href="/" passHref>
+            <ArrowBackIcon
+              style={{
+                position: 'relative',
+                marginRight: 20,
+                cursor: 'pointer'
+              }}
+            />
+          </Link>
+          Lista de pets
+        </S.PageTitle>
         <S.GridContainer container spacing={3}>
           {data.map((pet: Pet) => (
             <S.GridItem item key={uuidv4()} justifyContent="center">

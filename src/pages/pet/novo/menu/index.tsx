@@ -1,6 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Head from 'next/head'
+import Link from 'next/link'
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useForm } from 'react-hook-form'
@@ -139,7 +141,19 @@ const Form = () => {
       </Head>
 
       <S.FormWrapper onSubmit={handleSubmit(onSubmitHandler)}>
-        <S.FormTitle data-cy="page-title">Cadastrar Pet</S.FormTitle>
+        <S.FormTitle data-cy="page-title">
+          {' '}
+          <Link href="/" passHref>
+            <ArrowBackIcon
+              style={{
+                position: 'relative',
+                marginRight: 20,
+                cursor: 'pointer'
+              }}
+            />
+          </Link>
+          Cadastrar Pet
+        </S.FormTitle>
         <S.FormRow>
           <S.Input
             {...register('name')}
