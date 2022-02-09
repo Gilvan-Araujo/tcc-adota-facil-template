@@ -167,7 +167,12 @@ const Form = () => {
 
           <S.FormControl variant="outlined" error={errors.type}>
             <InputLabel>Tipo</InputLabel>
-            <Select {...register('type')} data-cy="type-select">
+            <Select
+              {...register('type')}
+              variant="outlined"
+              data-cy="type-select"
+              label="Tipo"
+            >
               <MenuItem value="Cachorro" data-cy="type-dog">
                 Cachorro
               </MenuItem>
@@ -209,7 +214,7 @@ const Form = () => {
         <S.FormRow>
           <S.FormControl variant="outlined" error={errors.sex}>
             <InputLabel>Sexo</InputLabel>
-            <Select {...register('sex')} data-cy="sex-select">
+            <Select {...register('sex')} data-cy="sex-select" label="sexo">
               <MenuItem value="Macho" data-cy="sex-male">
                 Macho
               </MenuItem>
