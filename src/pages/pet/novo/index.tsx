@@ -1,5 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { InputLabel, MenuItem, Select } from '@material-ui/core'
+import {
+  FormControlLabel,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Radio,
+  Select,
+  TextField
+} from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -155,6 +163,7 @@ const Form = () => {
           {' '}
           <Link href="/" passHref>
             <ArrowBackIcon
+              color="secondary"
               style={{
                 position: 'relative',
                 marginRight: 20,
@@ -165,7 +174,7 @@ const Form = () => {
           Cadastrar Pet
         </S.FormTitle>
         <S.FormRow>
-          <S.Input
+          <TextField
             {...register('name')}
             label="Nome"
             placeholder="Como o pet é chamado"
@@ -192,13 +201,9 @@ const Form = () => {
                 </MenuItem>
               </Select>
               {errors.type && (
-                <S.FormHelperText
-                  variant="outlined"
-                  required
-                  error={errors.type}
-                >
+                <FormHelperText variant="outlined" required error={errors.type}>
                   {errors.type.message}
-                </S.FormHelperText>
+                </FormHelperText>
               )}
             </S.FormControl>
           )}
@@ -206,10 +211,10 @@ const Form = () => {
           {query.type === 'interacao' && (
             <S.FormControl error={errors.type}>
               <S.RadioGroup {...register('type')}>
-                <S.FormControlLabel
+                <FormControlLabel
                   value="cachorro"
                   control={
-                    <S.Radio
+                    <Radio
                       color="primary"
                       data-cy="type-dog"
                       {...register('type')}
@@ -218,10 +223,10 @@ const Form = () => {
                   label="Cachorro"
                   labelPlacement="start"
                 />
-                <S.FormControlLabel
+                <FormControlLabel
                   value="gato"
                   control={
-                    <S.Radio
+                    <Radio
                       color="primary"
                       data-cy="type-cat"
                       {...register('type')}
@@ -231,15 +236,15 @@ const Form = () => {
                   labelPlacement="start"
                 />
               </S.RadioGroup>
-              <S.FormHelperText variant="outlined">
+              <FormHelperText variant="outlined">
                 {errors.type && errors.type.message}
-              </S.FormHelperText>
+              </FormHelperText>
             </S.FormControl>
           )}
         </S.FormRow>
 
         <S.FormRow>
-          <S.Input
+          <TextField
             {...register('age')}
             label="Idade"
             placeholder="Em anos"
@@ -250,7 +255,7 @@ const Form = () => {
             data-cy="age"
           />
 
-          <S.Input
+          <TextField
             {...register('breed')}
             label="Raça"
             placeholder="Ex.: vira-lata, siamês, etc"
@@ -273,19 +278,19 @@ const Form = () => {
                   Fêmea
                 </MenuItem>
               </Select>
-              <S.FormHelperText variant="outlined" error={errors.type}>
+              <FormHelperText variant="outlined" error={errors.type}>
                 {errors.sex && errors.sex.message}
-              </S.FormHelperText>
+              </FormHelperText>
             </S.FormControl>
           )}
 
           {query.type === 'interacao' && (
             <S.FormControl error={errors.sex}>
               <S.RadioGroup {...register('sex')}>
-                <S.FormControlLabel
+                <FormControlLabel
                   value="macho"
                   control={
-                    <S.Radio
+                    <Radio
                       color="primary"
                       data-cy="sex-male"
                       {...register('sex')}
@@ -294,10 +299,10 @@ const Form = () => {
                   label="Macho"
                   labelPlacement="start"
                 />
-                <S.FormControlLabel
+                <FormControlLabel
                   value="fêmea"
                   control={
-                    <S.Radio
+                    <Radio
                       color="primary"
                       data-cy="sex-female"
                       {...register('sex')}
@@ -307,15 +312,15 @@ const Form = () => {
                   labelPlacement="start"
                 />
               </S.RadioGroup>
-              <S.FormHelperText variant="outlined">
+              <FormHelperText variant="outlined">
                 {errors.sex && errors.sex.message}
-              </S.FormHelperText>
+              </FormHelperText>
             </S.FormControl>
           )}
 
           <InputMask {...register('phone')} mask="(99) 99999-9999">
             {() => (
-              <S.Input
+              <TextField
                 {...register('phone')}
                 label="Whatsapp"
                 placeholder="Número para contato"

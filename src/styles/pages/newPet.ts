@@ -1,9 +1,6 @@
 import {
   Button as MUIButton,
   FormControl as MUIFormControl,
-  FormControlLabel as MUIFormControlLabel,
-  FormHelperText as MUIFormHelperText,
-  Radio as MUIRadio,
   RadioGroup as MUIRadioGroup,
   TextField as MUITextField
 } from '@material-ui/core'
@@ -63,8 +60,6 @@ export const ImageDropzoneLabel = styled.label`
   margin-bottom: 5px;
 `
 
-export const Input = styled(MUITextField)``
-
 export const FormControl = styled(MUIFormControl)`
   width: 230px;
 `
@@ -78,12 +73,6 @@ export const RadioGroup = styled(MUIRadioGroup)`
     margin: 0;
   }
 `
-
-export const FormControlLabel = styled(MUIFormControlLabel)``
-
-export const Radio = styled(MUIRadio)``
-
-export const FormHelperText = styled(MUIFormHelperText)``
 
 export const LargeInput = styled(MUITextField)`
   width: 480px;
