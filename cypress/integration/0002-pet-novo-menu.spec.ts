@@ -1,6 +1,6 @@
-describe('Add pet page', () => {
+describe('Add pet page (menu)', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000/pet/novo/menu')
+    cy.visit('http://localhost:3000/pet/novo?type=menu')
   })
 
   it('should go to the right page', () => {
