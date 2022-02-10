@@ -73,15 +73,17 @@ export const RadioGroup = styled(MUIRadioGroup)`
   justify-content: center;
   width: 230px;
   height: 56px;
+
+  label {
+    margin: 0;
+  }
 `
 
 export const FormControlLabel = styled(MUIFormControlLabel)``
 
 export const Radio = styled(MUIRadio)``
 
-export const FormHelperText = styled(MUIFormHelperText)`
-  margin-bottom: 100px;
-`
+export const FormHelperText = styled(MUIFormHelperText)``
 
 export const LargeInput = styled(MUITextField)`
   width: 480px;

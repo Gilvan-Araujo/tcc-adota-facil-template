@@ -24,13 +24,13 @@ function Home() {
           </Button>
         </Link>
 
-        <Link href="/pet/novo/interacao" passHref>
+        <Link href="/pet/novo?type=interacao" passHref>
           <Button variant="contained" color="primary">
             Ir para o form (interação direta)
           </Button>
         </Link>
 
-        <Link href="/pet/novo/menu" passHref>
+        <Link href="/pet/novo?type=menu" passHref>
           <Button variant="contained" color="primary">
             Ir para o form (menu)
           </Button>
