@@ -162,7 +162,7 @@ const Form = () => {
               }}
             />
           </Link>
-          Cadastrar Pet <p>{query.type}</p>
+          Cadastrar Pet
         </S.FormTitle>
         <S.FormRow>
           <S.Input
