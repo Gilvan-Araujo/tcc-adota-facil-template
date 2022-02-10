@@ -50,6 +50,7 @@ const AllPets = () => {
         <S.PageTitle>
           <Link href="/" passHref>
             <ArrowBackIcon
+              color="secondary"
               style={{
                 position: 'relative',
                 marginRight: 20,
