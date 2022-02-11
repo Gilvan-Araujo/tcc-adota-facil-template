@@ -53,3 +53,21 @@ export const OptionsContainer = styled.div`
     }
   }
 `
+
+export const MenuContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+
+  .MuiButton-root {
+    font-size: 1rem;
+  }
+
+  .MuiList-root {
+    background-color: ${theme.palette.secondary.main};
+    color: ${theme.palette.primary.contrastText};
+  }
+`
