@@ -25,14 +25,11 @@ import Pets from '@services/Pets'
 
 import createWhatsappLink from '@utils/createWhatsappLink'
 
-import Load from '@components/Load'
-
 import * as S from '@styles/pages/newPet'
 
 const Form = () => {
   const { query } = useRouter()
 
-  const [loading, setLoading] = useState(false)
   const [image, setImage] = useState<File>()
 
   const schema = Yup.object().shape({
@@ -73,52 +70,33 @@ const Form = () => {
     if (!image)
       return toast.error('Selecione uma imagem', { toastId: 'pickAnImage' })
 
-    setLoading(true)
+    await toast
+      .promise(
+        Images.uploadImage(image)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .then(async (response: any) => {
+            const newData = {
+              ...data,
+              image: response.data.data.url,
+              phoneContact: createWhatsappLink(data.phone)
+            }
 
-    let imageUrl = ''
-
-    await Images.uploadImage(image)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .then((response: any) => {
-        imageUrl = response.data.data.url
-      })
-      .catch(() =>
-        toast.error('Erro ao enviar imagem', {
-          toastId: 'uploadImageError'
-        })
+            await Pets.addPet(newData)
+          }),
+        {
+          pending: 'Cadastrando pet',
+          success: 'Pet cadastrado com sucesso',
+          error: 'Erro ao cadastrar pet'
+        },
+        { toastId: 'addPet' }
       )
-
-    if (imageUrl === '') {
-      setLoading(false)
-      return toast.error('Erro ao enviar imagem', {
-        toastId: 'uploadImageError'
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
-    }
-
-    const newData = {
-      ...data,
-      image: imageUrl,
-      phoneContact: createWhatsappLink(data.phone)
-    }
-
-    await Pets.addPet(newData)
-      .then(() => {
+      .finally(() => {
         reset()
         setImage(undefined)
-        toast.success('Pet cadastrado com sucesso!', {
-          toastId: 'registerSuccess'
-        })
-      })
-      .catch(() =>
-        toast.error(
-          'Ocorreu um erro ao cadastrar o pet. Por favor, tente novamente.',
-          {
-            toastId: 'registerError'
-          }
-        )
-      )
-      .finally(() => {
-        setLoading(false)
       })
 
     return {}
@@ -152,8 +130,6 @@ const Form = () => {
 
   return (
     <>
-      <Load loading={loading} />
-
       <Head>
         <title>Cadastrar Pet</title>
       </Head>
