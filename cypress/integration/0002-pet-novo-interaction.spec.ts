@@ -115,8 +115,6 @@ describe('Add pet page (direct interaction)', () => {
 
     expect(cy.get('[id=addPet]').contains('Cadastrando pet').should('exist'))
 
-    cy.request('http://localhost:3000/api/addPet', { method: 'POST' })
-
     expect(
       cy
         .get('[id=addPet]')
