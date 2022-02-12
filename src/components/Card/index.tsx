@@ -84,8 +84,8 @@ export default function Card({ pet }: CardProps) {
   return (
     <MUICard className={classes.root}>
       <CardHeader
-        title={`Nome: ${pet.name}`}
-        subheader={`Idade: ${pet.age}`}
+        title={`${pet.name}`}
+        subheader={`${pet.age} ${pet.age > 1 ? 'anos' : 'ano'}`}
         action={
           <IconButton
             aria-label="mais configurações"
@@ -118,7 +118,7 @@ export default function Card({ pet }: CardProps) {
       <CardMedia className={classes.media} image={pet.image} title={pet.name} />
       <CardContent>
         <Typography variant="subtitle2" color="textSecondary" component="p">
-          Expanda para ver mais detalhes / Abra o menu para mais opções
+          Deslize para mais detalhes / <br /> Abra o menu para mais opções
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -158,17 +158,29 @@ export default function Card({ pet }: CardProps) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph variant="body1" color="textSecondary">
+          <Typography
+            style={{ textTransform: 'capitalize' }}
+            paragraph
+            variant="body1"
+            color="textSecondary"
+          >
             Tipo: {pet.type}
           </Typography>
-          <Typography paragraph variant="body1" color="textSecondary">
+          <Typography
+            style={{ textTransform: 'capitalize' }}
+            paragraph
+            variant="body1"
+            color="textSecondary"
+          >
             Raça: {pet.breed}
           </Typography>
-          <Typography paragraph variant="body1" color="textSecondary">
+          <Typography
+            style={{ textTransform: 'capitalize' }}
+            paragraph
+            variant="body1"
+            color="textSecondary"
+          >
             Sexo: {pet.sex}
-          </Typography>
-          <Typography paragraph variant="body1" color="textSecondary">
-            Descrição: {pet.description}
           </Typography>
           <Typography paragraph variant="body1" color="textSecondary">
             Contato:{' '}
@@ -177,6 +189,9 @@ export default function Card({ pet }: CardProps) {
               displayType="text"
               format="(##) # ####-####"
             />
+          </Typography>
+          <Typography paragraph variant="body1" color="textSecondary">
+            Descrição: {pet.description}
           </Typography>
         </CardContent>
       </Collapse>
