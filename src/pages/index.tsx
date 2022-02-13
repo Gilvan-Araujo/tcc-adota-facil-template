@@ -10,11 +10,13 @@ import {
   useMediaQuery
 } from '@material-ui/core'
 import Head from 'next/head'
-import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
 import * as S from '@styles/pages/Home'
+
+import logo from '../../public/logo.svg'
 
 function Home() {
   const router = useRouter()
@@ -61,26 +63,8 @@ function Home() {
       </Head>
 
       <S.HomeContainer>
-        <h1>Home page</h1>
-        <div style={{ display: 'none' }}>
-          <Link href="/pets" passHref>
-            <Button variant="contained" color="primary">
-              Ir para a listagem
-            </Button>
-          </Link>
-
-          <Link href="/pet/novo?type=interacao" passHref>
-            <Button variant="contained" color="primary">
-              Ir para o form (interação direta)
-            </Button>
-          </Link>
-
-          <Link href="/pet/novo?type=menu" passHref>
-            <Button variant="contained" color="primary">
-              Ir para o form (menu)
-            </Button>
-          </Link>
-        </div>
+        <h1 style={{ display: 'none' }}>Adota fácil</h1>
+        <Image alt="Logo Adota Fácil" src={logo} height={75} />
 
         <S.OptionsContainer>
           <div className={`${sliderValue <= 20 ? 'highlight' : ''}`}>
