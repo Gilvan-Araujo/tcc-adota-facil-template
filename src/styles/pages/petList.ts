@@ -22,5 +22,3 @@ export const PageTitle = styled.h1`
 export const GridContainer = styled(Grid)`
   justify-content: center;
 `
-
-export const GridItem = styled(Grid)``

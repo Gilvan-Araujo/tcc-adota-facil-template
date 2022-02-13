@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -11,7 +12,7 @@ import Pets from '@services/Pets'
 import Card from '@components/Card'
 import Load from '@components/Load'
 
-import * as S from '@styles/pages/Pets'
+import * as S from '@styles/pages/petList'
 
 const AllPets = () => {
   const [loading, setLoading] = useState(false)
@@ -49,6 +50,7 @@ const AllPets = () => {
         <S.PageTitle>
           <Link href="/" passHref>
             <ArrowBackIcon
+              color="secondary"
               style={{
                 position: 'relative',
                 marginRight: 20,
@@ -60,9 +62,9 @@ const AllPets = () => {
         </S.PageTitle>
         <S.GridContainer container spacing={3}>
           {data.map((pet: Pet) => (
-            <S.GridItem item key={uuidv4()} justifyContent="center">
+            <Grid item key={uuidv4()} justifyContent="center">
               <Card pet={pet} />
-            </S.GridItem>
+            </Grid>
           ))}
         </S.GridContainer>
       </S.PageWrapper>

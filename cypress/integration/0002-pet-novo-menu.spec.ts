@@ -1,6 +1,6 @@
-describe('Add pet page', () => {
+describe('Add pet page (menu)', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000/pet/novo/menu')
+    cy.visit('http://localhost:3000/pet/novo?type=menu')
   })
 
   it('should go to the right page', () => {
@@ -80,7 +80,9 @@ describe('Add pet page', () => {
     cy.dataCy('image-dropzone').attachFile('validFile.png')
     cy.dataCy('submit-button').click()
 
-    expect(cy.get('[id=uploadImageError]').should('be.visible'))
+    expect(
+      cy.get('[id=addPet]').contains('Erro ao cadastrar pet').should('exist')
+    )
   })
 
   it('should display the register pet error toast correctly', () => {
@@ -91,7 +93,9 @@ describe('Add pet page', () => {
     cy.dataCy('image-dropzone').attachFile('validFile.png')
     cy.dataCy('submit-button').click()
 
-    expect(cy.get('[id=registerError]').should('be.visible'))
+    expect(
+      cy.get('[id=addPet]').contains('Erro ao cadastrar pet').should('exist')
+    )
   })
 
   it('should display the invalid image error toast', () => {
@@ -103,12 +107,19 @@ describe('Add pet page', () => {
 
   it('should complete the whole process of adding a pet', () => {
     cy.interceptImageUpload(200, 'image.jpg')
-    cy.interceptAddPet(200)
+    cy.interceptAddPet(200, 2500)
 
     cy.customFillFormFieldsMenu('', false)
     cy.dataCy('image-dropzone').attachFile('validFile.png')
     cy.dataCy('submit-button').click()
 
-    expect(cy.get('[id=registerSuccess]').should('be.visible'))
+    expect(cy.get('[id=addPet]').contains('Cadastrando pet').should('exist'))
+
+    expect(
+      cy
+        .get('[id=addPet]')
+        .contains('Pet cadastrado com sucesso')
+        .should('exist')
+    )
   })
 })

@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </StyledProvider>
       </MuiThemeProvider>
-      <ToastContainer position="bottom-center" theme="dark" />
+      <ToastContainer position="bottom-center" theme="dark" autoClose={4000} />
     </>
   )
 }

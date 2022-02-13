@@ -66,7 +66,7 @@ declare global {
        * Custom command to intercept the api call to add a pet. Takes the status to be returned.
        * @example cy.interceptAddPet(200)
        */
-      interceptAddPet(status: number): Chainable<Element>
+      interceptAddPet(status: number, delay?: number): Chainable<Element>
 
       /**
        * Custom command to intercept the api call to upload an image to imgBB. Takes the status to be returned and a possible url.

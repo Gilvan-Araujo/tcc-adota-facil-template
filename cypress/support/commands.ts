@@ -105,8 +105,9 @@ Cypress.Commands.add('interceptImageUpload', (status: number, url: string) => {
   })
 })
 
-Cypress.Commands.add('interceptAddPet', (status: number) => {
+Cypress.Commands.add('interceptAddPet', (status: number, delay?: number) => {
   cy.intercept('POST', 'http://localhost:3000/api/addPet', {
-    statusCode: status
+    statusCode: status,
+    delay
   })
 })
